@@ -1,0 +1,31 @@
+services:
+  portfolio:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    ports:
+      - "9113:9113"
+    command: 
+      - '-nginx.scrape-uri=http://portfolio:80/stub_status'
+    depends_on:
+      - portfolio
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - nginx-exporter
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bien Louis Barbachano | Junior DevOps Engineer</title>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: '#080d14', surface: '#0d1624', elevated: '#152236',
+            accent: '#00e5a0', 'accent-dim': '#00b87e',
+            primary: '#e8edf5', secondary: '#7d8fa8',
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          letterSpacing: { tightest: '-0.04em', tighter: '-0.03em', tight: '-0.02em' },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #080d14;
+      color: #e8edf5;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ── Grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9998; opacity: 0.4;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #080d14; }
+    ::-webkit-scrollbar-thumb { background: #00e5a0; border-radius: 3px; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,160,0.3); }
+      50%       { box-shadow: 0 0 0 8px rgba(0,229,160,0); }
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    .fade-up { animation: fadeUp 0.75s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+    .d3 { animation-delay: 0.25s; } .d4 { animation-delay: 0.35s; }
+    .d5 { animation-delay: 0.45s; } .d6 { animation-delay: 0.55s; }
+
+    /* ── Nav ── */
+    nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .nav-link {
+      position: relative; color: #7d8fa8;
+      transition: color 0.2s ease; font-size: 0.875rem; font-family: 'Inter', sans-serif;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: #00e5a0;
+      transition: width 0.25s cubic-bezier(0.34,1.2,0.64,1);
+    }
+    .nav-link:hover { color: #00e5a0; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid #00e5a0; outline-offset: 4px; border-radius: 3px; }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-block; background: #00e5a0; color: #080d14;
+      font-weight: 600; font-family: 'Space Grotesk', sans-serif;
+      padding: 12px 30px; border-radius: 8px; font-size: 0.9rem; letter-spacing: -0.01em;
+      box-shadow: 0 4px 24px rgba(0,229,160,0.25);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,229,160,0.35); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #00e5a0; outline-offset: 4px; }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1.5px solid rgba(0,229,160,0.35); color: #00e5a0;
+      font-weight: 500; font-family: 'Space Grotesk', sans-serif;
+      padding: 12px 30px; border-radius: 8px; font-size: 0.9rem;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, box-shadow 0.25s ease;
+    }
+    .btn-outline:hover { background: rgba(0,229,160,0.08); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,229,160,0.12); }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #00e5a0; outline-offset: 4px; }
+
+    /* ── Section heading ── */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: #00e5a0; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      letter-spacing: -0.03em; color: #e8edf5;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: #0d1624;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,160,0.12);
+      border-color: rgba(0,229,160,0.15);
+    }
+    .card-placeholder {
+      background: rgba(0,229,160,0.02);
+      border: 1.5px dashed rgba(0,229,160,0.2);
+      border-radius: 16px;
+      transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), background 0.3s ease;
+    }
+    .card-placeholder:hover {
+      transform: translateY(-4px);
+      background: rgba(0,229,160,0.04);
+    }
+
+    /* ── Tech tags ── */
+    .tag {
+      background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2);
+      color: #00e5a0; padding: 3px 10px; border-radius: 999px;
+      font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+    }
+
+    /* ── Skill pill ── */
+    .skill-pill {
+      background: #152236; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 12px 16px;
+      transition: transform 0.2s cubic-bezier(0.34,1.4,0.64,1), background 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+    }
+    .skill-pill:hover {
+      background: rgba(0,229,160,0.1); transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,229,160,0.12);
+      border-color: rgba(0,229,160,0.25);
+    }
+
+    /* ── Timeline ── */
+    .timeline-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #00e5a0; flex-shrink: 0; margin-top: 6px;
+      box-shadow: 0 0 14px rgba(0,229,160,0.6);
+      animation: pulse-glow 2.5s ease infinite;
+    }
+    .timeline-line {
+      width: 2px; background: linear-gradient(to bottom, rgba(0,229,160,0.4), transparent);
+      flex-shrink: 0;
+    }
+
+    /* ── Available badge ── */
+    .available-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #00e5a0;
+      animation: pulse-glow 2s ease infinite;
+    }
+
+    /* ── Cursor blink ── */
+    .cursor { animation: blink 1s step-end infinite; color: #00e5a0; }
+
+    /* ── Hero radial bg ── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 900px 700px at 65% 40%, rgba(0,229,160,0.055) 0%, transparent 65%),
+        radial-gradient(ellipse 500px 500px at 15% 85%, rgba(0,80,180,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 600px 400px at 85% 90%, rgba(0,229,160,0.03) 0%, transparent 55%);
+    }
+
+    /* ── Horizontal rule ── */
+    .hr-accent { border: none; height: 1px; background: linear-gradient(to right, rgba(0,229,160,0.4), transparent); }
+
+    /* ── About card glow ── */
+    .about-surface {
+      background: #0d1624;
+      border: 1px solid rgba(0,229,160,0.1);
+      border-radius: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 0 80px rgba(0,229,160,0.04);
+    }
+
+    /* ── Contact form ── */
+    .form-input {
+      background: #0d1624; border: 1px solid rgba(255,255,255,0.08);
+      color: #e8edf5; border-radius: 10px; padding: 14px 18px;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus { outline: none; border-color: rgba(0,229,160,0.4); box-shadow: 0 0 0 3px rgba(0,229,160,0.08); }
+    .form-input::placeholder { color: #4a5568; }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+    }
+  </style>
+</head>
+<body class="grain">
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.05]" style="background:rgba(8,13,20,0.85);">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-mono text-accent text-sm font-medium tracking-tight hover:opacity-80 transition-opacity focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 focus-visible:rounded-sm">
+        &lt;blvb /&gt;
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+      <a href="mailto:blbarbachano@gmail.com" class="btn-primary text-sm py-2 px-5">Hire Me</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section id="home" class="hero-bg min-h-screen flex items-center pt-20">
+    <div class="max-w-6xl mx-auto px-6 py-24 w-full">
+      <div class="max-w-3xl">
+
+        <!-- Available badge -->
+        <div class="fade-up d1 inline-flex items-center gap-2 bg-surface border border-white/[0.07] rounded-full px-4 py-2 mb-8">
+          <span class="available-dot"></span>
+          <span class="text-xs font-mono text-secondary">Open to opportunities</span>
+        </div>
+
+        <!-- Name -->
+        <h1 class="fade-up d2 font-display font-bold text-primary leading-none mb-4" style="font-size:clamp(2.6rem,6vw,4.5rem); letter-spacing:-0.04em;">
+          Bien Louis<br/>
+          <span style="color:#00e5a0;">Barbachano</span><span class="cursor">_</span>
+        </h1>
+
+        <!-- Title -->
+        <p class="fade-up d3 font-display text-xl font-medium text-secondary mb-6" style="letter-spacing:-0.01em;">
+          Junior DevOps Engineer
+        </p>
+
+        <!-- Tagline -->
+        <p class="fade-up d4 text-secondary text-base max-w-lg mb-8" style="line-height:1.75;">
+          CS graduate building cloud-native infrastructure and data pipelines.
+          Experienced with <span class="text-accent font-mono text-sm">AWS</span>,
+          <span class="text-accent font-mono text-sm">Docker</span>, and
+          <span class="text-accent font-mono text-sm">Python</span>,
+          bridging development and operations with a data-driven mindset.
+        </p>
+
+        <!-- CTAs -->
+        <div class="fade-up d5 flex flex-wrap gap-4 mb-12">
+          <a href="#contact" class="btn-primary">Get in Touch</a>
+          <a href="#projects" class="btn-outline">View Projects</a>
+        </div>
+
+        <!-- Quick stats -->
+        <div class="fade-up d6 flex flex-wrap gap-6">
+          <div class="flex flex-col">
+            <span class="font-display text-2xl font-bold text-accent" style="letter-spacing:-0.03em;">2+</span>
+            <span class="text-xs text-secondary font-mono">Years Studying CS</span>
+          </div>
+          <div class="w-px bg-white/10"></div>
+          <div class="flex flex-col">
+            <span class="font-display text-2xl font-bold text-accent" style="letter-spacing:-0.03em;">4+</span>
+            <span class="text-xs text-secondary font-mono">Projects Shipped</span>
+          </div>
+          <div class="w-px bg-white/10"></div>
+          <div class="flex flex-col">
+            <span class="font-display text-2xl font-bold text-accent" style="letter-spacing:-0.03em;">200k+</span>
+            <span class="text-xs text-secondary font-mono">Rows Processed</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ ABOUT ═══════════════ -->
+  <section id="about" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">01 / About Me</p>
+    <h2 class="section-title text-4xl mb-12" style="font-size:clamp(1.8rem,4vw,2.75rem);">Who I Am</h2>
+
+    <div class="grid md:grid-cols-5 gap-10 items-center">
+      <!-- Image -->
+      <div class="md:col-span-2 flex justify-center">
+        <div class="relative">
+          <div class="w-64 h-64 rounded-2xl overflow-hidden" style="box-shadow:0 0 0 1px rgba(0,229,160,0.15),0 24px 80px rgba(0,0,0,0.5);">
+            <img src="https://placehold.co/256x256/0d1624/00e5a0?text=BLB" alt="Bien Louis Barbachano" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          </div>
+          <!-- Floating badge -->
+          <div class="absolute -bottom-4 -right-4 bg-elevated border border-white/10 rounded-xl px-4 py-3 shadow-xl">
+            <p class="text-xs text-secondary font-mono">Based in</p>
+            <p class="text-sm font-display font-semibold text-primary">Baguio City, PH</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="md:col-span-3 about-surface p-8">
+        <p class="text-secondary mb-5" style="line-height:1.8;">
+          I'm a Computer Science student at the University of the Cordilleras with hands-on experience in
+          cloud infrastructure, and machine learning. My work spans building
+          VAE anomaly detection systems and deploying Android apps with real-time Firebase backends,
+          backed by communication skills refined through high-volume customer-facing roles.
+        </p>
+        <p class="text-secondary mb-8" style="line-height:1.8;">
+          I'm driven by automation, scalable systems, and making infrastructure invisible so teams
+          can stay focused on shipping. I'm actively seeking opportunities to grow as a DevOps
+          practitioner and contribute to production-grade cloud-native pipelines.
+        </p>
+
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p class="text-secondary text-xs font-mono mb-1">Email</p>
+            <a href="mailto:blbarbachano@gmail.com" class="text-accent hover:underline focus-visible:outline-accent focus-visible:outline-2 focus-visible:rounded-sm">blbarbachano@gmail.com</a>
+          </div>
+          <div>
+            <p class="text-secondary text-xs font-mono mb-1">Phone</p>
+            <a href="tel:+639621860122" class="text-primary hover:text-accent transition-colors focus-visible:outline-accent focus-visible:outline-2 focus-visible:rounded-sm">+63 962-186-0122</a>
+          </div>
+          <div>
+            <p class="text-secondary text-xs font-mono mb-1">University</p>
+            <p class="text-primary">University of the Cordilleras</p>
+          </div>
+          <div>
+            <p class="text-secondary text-xs font-mono mb-1">Degree</p>
+            <p class="text-primary">B.S. Computer Science</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ EXPERIENCE ═══════════════ -->
+  <section id="experience" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">02 / Experience</p>
+    <h2 class="section-title mb-12" style="font-size:clamp(1.8rem,4vw,2.75rem);">Work History</h2>
+
+    <div class="max-w-3xl space-y-8">
+
+      <!-- Accenture -->
+      <div class="relative flex gap-6 pl-6">
+        <div class="absolute left-0 top-0 flex flex-col items-center" style="height:100%;">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line flex-1 mt-2"></div>
+        </div>
+        <div class="card p-6 w-full">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div>
+              <h3 class="font-display font-semibold text-lg text-primary" style="letter-spacing:-0.02em;">Cloud Infrastructure Intern</h3>
+              <p class="text-accent text-sm font-mono">Accenture</p>
+            </div>
+            <span class="tag">June 2025 – Aug 2025</span>
+          </div>
+          <ul class="space-y-2 text-secondary text-sm" style="line-height:1.7;">
+            <li class="flex gap-2"><span class="text-accent mt-1 flex-shrink-0">▸</span> Built practical experience in cloud infrastructure, deployment models, and enterprise-scale systems.</li>
+            <li class="flex gap-2"><span class="text-accent mt-1 flex-shrink-0">▸</span> Supported cloud migration initiatives within large enterprise environments, contributing to operational stability and best practices.</li>
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag">AWS</span><span class="tag">Cloud Infrastructure</span><span class="tag">Enterprise Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Starbucks -->
+      <div class="relative flex gap-6 pl-6">
+        <div class="absolute left-0 top-0 flex flex-col items-center" style="height:100%;">
+          <div class="timeline-dot" style="background:#7d8fa8;box-shadow:none;animation:none;"></div>
+        </div>
+        <div class="card p-6 w-full">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div>
+              <h3 class="font-display font-semibold text-lg text-primary" style="letter-spacing:-0.02em;">Barista</h3>
+              <p class="text-accent text-sm font-mono">Starbucks Baguio</p>
+            </div>
+            <span class="tag">Oct 2025 – Jan 2026</span>
+          </div>
+          <ul class="space-y-2 text-secondary text-sm" style="line-height:1.7;">
+            <li class="flex gap-2"><span class="text-accent mt-1 flex-shrink-0">▸</span> Provided consistent, high-quality service across a high-throughput, fast-paced setting.</li>
+            <li class="flex gap-2"><span class="text-accent mt-1 flex-shrink-0">▸</span> Balanced multiple concurrent tasks under pressure, strengthening time management and precision.</li>
+            <li class="flex gap-2"><span class="text-accent mt-1 flex-shrink-0">▸</span> Developed client-facing communication skills that translate directly into consulting and technical collaboration.</li>
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag">Communication</span><span class="tag">Team Collaboration</span><span class="tag">Time Management</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ SKILLS ═══════════════ -->
+  <section id="skills" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">03 / Skills</p>
+    <h2 class="section-title mb-12" style="font-size:clamp(1.8rem,4vw,2.75rem);">Technical Toolkit</h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Programming -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">Programming Languages</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Python</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Git Bash</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">SQL</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Java</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">HTML/CSS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud & DevOps -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">Cloud &amp; DevOps</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-yellow-400 text-lg">☁</span>
+            <span class="text-sm font-medium text-primary">AWS</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-blue-400 text-lg">◈</span>
+            <span class="text-sm font-medium text-primary">Docker</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">❖</span>
+            <span class="text-sm font-medium text-primary">Linux</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-accent text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Git</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ML / Data -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">ML &amp; Data</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-purple-400 text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">TensorFlow/Keras</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-purple-400 text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">scikit-learn</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-purple-400 text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Pandas</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-purple-400 text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Streamlit</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-purple-400 text-lg">⬡</span>
+            <span class="text-sm font-medium text-primary">Power BI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analysis -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">Data Analysis</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-orange-400 text-lg">◆</span>
+            <span class="text-sm font-medium text-primary">EDA</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-orange-400 text-lg">◆</span>
+            <span class="text-sm font-medium text-primary">PCA</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-orange-400 text-lg">◆</span>
+            <span class="text-sm font-medium text-primary">ROC AUC</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-orange-400 text-lg">◆</span>
+            <span class="text-sm font-medium text-primary">ETL Concepts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">Statistics</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-green-400 text-lg">∑</span>
+            <span class="text-sm font-medium text-primary">Hypothesis Testing</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-green-400 text-lg">∑</span>
+            <span class="text-sm font-medium text-primary">ANOVA / t-tests</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-green-400 text-lg">∑</span>
+            <span class="text-sm font-medium text-primary">Distribution Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div>
+        <p class="text-xs font-mono text-accent mb-4 uppercase tracking-widest">Mobile &amp; Tools</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-cyan-400 text-lg">◈</span>
+            <span class="text-sm font-medium text-primary">Android Studio</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-cyan-400 text-lg">◈</span>
+            <span class="text-sm font-medium text-primary">Firebase</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-cyan-400 text-lg">◈</span>
+            <span class="text-sm font-medium text-primary">Figma</span>
+          </div>
+          <div class="skill-pill flex items-center gap-2">
+            <span class="text-cyan-400 text-lg">◈</span>
+            <span class="text-sm font-medium text-primary">Google Maps API</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ PROJECTS ═══════════════ -->
+  <section id="projects" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">04 / Projects</p>
+    <h2 class="section-title mb-4" style="font-size:clamp(1.8rem,4vw,2.75rem);">What I've Built</h2>
+    <p class="text-secondary mb-16 max-w-xl" style="line-height:1.75;">From academic research to personal experiments, here's a look at the work I've shipped.</p>
+
+    <!-- ─── Academic / Course Projects ─── -->
+    <div class="mb-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="h-px flex-1 bg-white/[0.06]"></div>
+        <div class="flex items-center gap-2 bg-elevated border border-white/[0.07] rounded-full px-4 py-2 flex-shrink-0">
+          <span class="text-accent text-xs">◆</span>
+          <span class="text-xs font-mono text-secondary uppercase tracking-widest">Academic &amp; Course Projects</span>
+        </div>
+        <div class="h-px flex-1 bg-white/[0.06]"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- VAE Thesis -->
+        <div class="card p-7">
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.2);">
+              <span class="text-2xl">🧠</span>
+            </div>
+            <span class="tag">Sep 2024 – Oct 2025</span>
+          </div>
+          <h3 class="font-display font-semibold text-lg text-primary mb-1" style="letter-spacing:-0.02em;">
+            Streamlit VAE Anomaly Detection Platform
+          </h3>
+          <p class="text-xs font-mono text-accent mb-3">University of the Cordilleras — Thesis</p>
+          <p class="text-secondary text-sm mb-5" style="line-height:1.75;">
+            Built an interactive Streamlit dashboard that detects network anomalies using a Variational Autoencoder.
+            Preprocessed over 200,000 rows and 80+ features from the CICIDS-2017 and UNSW-NB15 datasets,
+            with HDBSCAN and K-Means clustering integrated alongside confusion matrix and ROC AUC reporting.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">TensorFlow</span>
+            <span class="tag">scikit-learn</span><span class="tag">HDBSCAN</span><span class="tag">K-Means</span>
+          </div>
+        </div>
+
+        <!-- Mobile Bartering App -->
+        <div class="card p-7">
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);">
+              <span class="text-2xl">📱</span>
+            </div>
+            <span class="tag">Sep 2024 – Dec 2024</span>
+          </div>
+          <h3 class="font-display font-semibold text-lg text-primary mb-1" style="letter-spacing:-0.02em;">
+            Mobile Bartering App
+          </h3>
+          <p class="text-xs font-mono text-accent mb-3">University of the Cordilleras — Course Project</p>
+          <p class="text-secondary text-sm mb-5" style="line-height:1.75;">
+            Android application promoting sustainability through item-based bartering. Includes Google Maps
+            geolocation, real-time Firebase chat, user authentication, and image uploads. UI/UX fully
+            designed in Figma and built in Android Studio.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Java</span><span class="tag">XML</span><span class="tag">Firebase</span>
+            <span class="tag">Google Maps API</span><span class="tag">Android Studio</span><span class="tag">Figma</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── Personal Projects ─── -->
+    <div>
+      <div class="flex items-center gap-4 mb-8">
+        <div class="h-px flex-1 bg-white/[0.06]"></div>
+        <div class="flex items-center gap-2 bg-elevated border border-white/[0.07] rounded-full px-4 py-2 flex-shrink-0">
+          <span class="text-accent text-xs">◆</span>
+          <span class="text-xs font-mono text-secondary uppercase tracking-widest">Personal Projects</span>
+        </div>
+        <div class="h-px flex-1 bg-white/[0.06]"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Placeholder 1 -->
+        <div class="card-placeholder p-7 flex flex-col items-center justify-center text-center min-h-56">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(0,229,160,0.06);border:1px dashed rgba(0,229,160,0.25);">
+            <span class="text-2xl opacity-50">🚀</span>
+          </div>
+          <h3 class="font-display font-semibold text-primary text-base mb-2 opacity-50" style="letter-spacing:-0.02em;">Project Coming Soon</h3>
+          <p class="text-secondary text-xs font-mono">Personal project · coming soon</p>
+          <div class="flex flex-wrap gap-2 justify-center mt-4">
+            <span class="tag opacity-40">DevOps</span><span class="tag opacity-40">Python</span>
+          </div>
+        </div>
+
+        <!-- Placeholder 2 -->
+        <div class="card-placeholder p-7 flex flex-col items-center justify-center text-center min-h-56">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(0,229,160,0.06);border:1px dashed rgba(0,229,160,0.25);">
+            <span class="text-2xl opacity-50">🔧</span>
+          </div>
+          <h3 class="font-display font-semibold text-primary text-base mb-2 opacity-50" style="letter-spacing:-0.02em;">Project Coming Soon</h3>
+          <p class="text-secondary text-xs font-mono">Personal project · coming soon</p>
+          <div class="flex flex-wrap gap-2 justify-center mt-4">
+            <span class="tag opacity-40">AWS</span><span class="tag opacity-40">Docker</span>
+          </div>
+        </div>
+
+        <!-- Placeholder 3 -->
+        <div class="card-placeholder p-7 flex flex-col items-center justify-center text-center min-h-56">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(0,229,160,0.06);border:1px dashed rgba(0,229,160,0.25);">
+            <span class="text-2xl opacity-50">📊</span>
+          </div>
+          <h3 class="font-display font-semibold text-primary text-base mb-2 opacity-50" style="letter-spacing:-0.02em;">Project Coming Soon</h3>
+          <p class="text-secondary text-xs font-mono">Personal project · coming soon</p>
+          <div class="flex flex-wrap gap-2 justify-center mt-4">
+            <span class="tag opacity-40">Data</span><span class="tag opacity-40">Linux</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ EDUCATION ═══════════════ -->
+  <section id="education" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">05 / Education</p>
+    <h2 class="section-title mb-12" style="font-size:clamp(1.8rem,4vw,2.75rem);">Academic Background</h2>
+
+    <div class="max-w-3xl">
+      <div class="card p-8">
+        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+          <div class="flex gap-5 items-start">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);">
+              <span class="text-2xl">🎓</span>
+            </div>
+            <div>
+              <h3 class="font-display font-semibold text-xl text-primary" style="letter-spacing:-0.02em;">Bachelor of Science in Computer Science</h3>
+              <p class="text-accent text-sm font-mono">University of the Cordilleras</p>
+            </div>
+          </div>
+          <span class="tag">2022 – Present</span>
+        </div>
+
+        <hr class="hr-accent mb-6" />
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs font-mono text-accent mb-3 uppercase tracking-widest">Core Coursework</p>
+            <ul class="space-y-2 text-secondary text-sm" style="line-height:1.7;">
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Data Structures &amp; Algorithms</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> System Design &amp; Operating Systems</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Object-Oriented Programming</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Machine Learning</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Statistics &amp; Probability Theory</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Optimization Methods</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-accent mb-3 uppercase tracking-widest">Notable Work</p>
+            <ul class="space-y-2 text-secondary text-sm" style="line-height:1.7;">
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Research thesis on Unsupervised VAE for network anomaly detection</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> 200k+ row dataset preprocessing (CICIDS-2017, UNSW-NB15)</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Built Streamlit analytics platform with VAE + clustering</li>
+              <li class="flex gap-2"><span class="text-accent flex-shrink-0">▸</span> Deployed Android barter app with Firebase &amp; Maps API</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════ CONTACT ═══════════════ -->
+  <section id="contact" class="py-24 max-w-6xl mx-auto px-6">
+    <p class="section-label mb-3">06 / Contact</p>
+    <h2 class="section-title mb-4" style="font-size:clamp(1.8rem,4vw,2.75rem);">Let's Connect</h2>
+    <p class="text-secondary mb-12 max-w-lg" style="line-height:1.75;">
+      Open to junior DevOps, cloud infrastructure, or data engineering roles.
+      Drop me a message and let's talk.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-12 max-w-4xl">
+
+      <!-- Contact info -->
+      <div class="space-y-6">
+        <a href="mailto:blbarbachano@gmail.com" class="card p-5 flex items-center gap-4 group block" style="text-decoration:none;">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);">
+            <span class="text-xl">✉</span>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-secondary mb-1">Email</p>
+            <p class="text-primary text-sm font-medium group-hover:text-accent transition-colors">blbarbachano@gmail.com</p>
+          </div>
+        </a>
+
+        <a href="tel:+639621860122" class="card p-5 flex items-center gap-4 group block" style="text-decoration:none;">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);">
+            <span class="text-xl">📞</span>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-secondary mb-1">Phone</p>
+            <p class="text-primary text-sm font-medium group-hover:text-accent transition-colors">+63 962-186-0122</p>
+          </div>
+        </a>
+
+        <div class="card p-5 flex items-center gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);">
+            <span class="text-xl">📍</span>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-secondary mb-1">Location</p>
+            <p class="text-primary text-sm font-medium">Baguio City, Benguet, Philippines</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick message form -->
+      <form onsubmit="return false;" class="space-y-4">
+        <div>
+          <label class="text-xs font-mono text-secondary block mb-2 uppercase tracking-widest">Name</label>
+          <input type="text" class="form-input" placeholder="Your name" />
+        </div>
+        <div>
+          <label class="text-xs font-mono text-secondary block mb-2 uppercase tracking-widest">Email</label>
+          <input type="email" class="form-input" placeholder="your@email.com" />
+        </div>
+        <div>
+          <label class="text-xs font-mono text-secondary block mb-2 uppercase tracking-widest">Message</label>
+          <textarea class="form-input" rows="4" placeholder="Say hello..." style="resize:vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full text-center" style="cursor:pointer;">Send Message</button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="border-t border-white/[0.05] py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+      <p class="text-secondary text-sm font-mono">
+        © 2026 <span class="text-accent">Bien Louis V. Barbachano</span>
+      </p>
+      <p class="text-secondary text-xs font-mono">
+        Junior DevOps Engineer · Baguio City, PH
+      </p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ SCROLL REVEAL ═══════════════ -->
+  <script>
+    // Simple intersection observer for scroll reveal
+    const revealElements = document.querySelectorAll('.card, .skill-pill, .card-placeholder');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.34,1.4,0.64,1)';
+      observer.observe(el);
+    });
+
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        nav.style.borderBottomColor = 'rgba(0,229,160,0.08)';
+      } else {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

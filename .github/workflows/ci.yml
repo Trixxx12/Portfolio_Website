@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build Docker image
         run: docker build -t portfolio .
@@ -38,5 +38,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/Portfolio_Website
-            docker compose pull
-            docker compose up -d --build
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/portfolio_website:latest
+            docker compose up -d
